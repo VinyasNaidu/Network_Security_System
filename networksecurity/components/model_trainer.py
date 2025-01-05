@@ -30,9 +30,9 @@ from urllib.parse import urlparse
 import dagshub
 dagshub.init(repo_owner='vinyasnaidukarri', repo_name='Network_Security_System', mlflow=True)
 
-#os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/vinyasnaidukarri/Network_Security_System.mlflow"
-#os.environ["MLFLOW_TRACKING_USERNAME"]="vinyasnaidukarri"
-#os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
+os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/vinyasnaidukarri/Network_Security_System.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"]="vinyasnaidukarri"
+os.environ["MLFLOW_TRACKING_PASSWORD"]="efdbe7648e8d20284e99184dfe4d9a640a96e531"
 
 
 
@@ -47,8 +47,8 @@ class ModelTrainer:
             raise NetworkSecurityException(e,sys)
         
     def track_mlflow(self,best_model,classificationmetric):
-       # mlflow.set_registry_uri("https://dagshub.com/krishnaik06/networksecurity.mlflow")
-        #tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+        mlflow.set_registry_uri("https://dagshub.com/vinyasnaidukarri/Network_Security_System.mlflow")
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         with mlflow.start_run():
             f1_score=classificationmetric.f1_score
             precision_score=classificationmetric.precision_score
@@ -61,15 +61,15 @@ class ModelTrainer:
             mlflow.log_metric("recall_score",recall_score)
             mlflow.sklearn.log_model(best_model,"model")
             # Model registry does not work with file store
-          #  if tracking_url_type_store != "file":
+            #if tracking_url_type_store != "file":
 
                 # Register the model
                 # There are other ways to use the Model Registry, which depends on the use case,
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-           #     mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
-          #  else:
-           #     mlflow.sklearn.log_model(best_model, "model")
+            #    mlflow.sklearn.log_model(best_model, "model", registered_model_name=best_model)
+            #else:
+            #    mlflow.sklearn.log_model(best_model, "model")
 
 
         
